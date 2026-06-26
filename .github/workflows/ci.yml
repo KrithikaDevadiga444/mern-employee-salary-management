@@ -1,0 +1,38 @@
+name: HRMS QA Tests
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  playwright-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd tests
+          npm install
+
+      - name: Install Playwright Browsers
+        run: |
+          cd tests
+          npx playwright install --with-deps chromium
+
+      - name: Run Playwright Tests
+        run: |
+          cd tests
+          npx playwright test --reporter=line

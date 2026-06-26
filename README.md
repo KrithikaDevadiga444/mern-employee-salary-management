@@ -166,3 +166,139 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+# HRMS - Employee Salary Management (QA Testing Project)
+
+## About this Project
+
+This repository contains my Quality Assurance testing work for an Employee Salary Management System.
+
+Instead of developing new features, my focus was on testing the existing application, finding business-critical bugs, writing automated tests, documenting defects, and analyzing the overall quality of the system.
+
+The application is used to manage employee information, attendance, salary calculation, and payslip generation.
+
+---
+
+## QA Work Completed
+
+During this project I completed:
+
+* Test Strategy
+* Acceptance Criteria
+* Exploratory Testing
+* Bug Reports
+* Negative Testing Report
+* Playwright End-to-End Tests
+* API Testing Report
+* GitHub Actions CI Pipeline
+* Quality Reflection
+* Hand Drawn Mind Map
+* Summary Sheet
+
+---
+
+## Major Bugs Found
+
+Some of the most important issues discovered during testing were:
+
+* Login accepts any username and password
+* Frontend is disconnected from backend in multiple places
+* Add Employee form does not save data
+* Payslip generation button does nothing
+* Employee login page is not linked
+* Employee search is not functional
+
+Detailed information is available in the QA Bug Reports.
+
+---
+
+## Test Results
+
+Playwright Tests Executed: **6**
+
+**Passed:** 4
+
+**Failed:** 2
+
+The failed tests are expected because they expose real defects found during testing.
+
+---
+
+## Technologies Used
+
+### Application
+
+* React
+* Node.js
+* Express
+* MySQL
+* Sequelize
+
+### QA Tools
+
+* Playwright
+* GitHub Actions
+* Browser DevTools
+* MySQL Workbench
+
+---
+
+## Project Structure
+
+```
+Backend/
+Frontend/
+tests/
+
+QA-301-acceptance-criteria.md
+QA-tickets.md
+test-strategy.md
+summary-sheet.md
+negative-testing-report.md
+quality-reflection.md
+playwright-test-report.md
+api-testing-report.md
+```
+
+---
+
+## Running the Application
+
+### Backend
+
+```
+cd Backend
+npm install
+npm start
+```
+
+### Frontend
+
+```
+cd Frontend
+npm install
+npm run dev
+```
+
+### Playwright Tests
+
+```
+cd tests
+npm install
+npx playwright test
+```
+
+---
+
+## GitHub Actions
+
+A GitHub Actions workflow is included to automatically run the Playwright test suite whenever code is pushed to the repository.
+
+---
+
+## Original Project
+
+This repository is based on the open-source Employee Salary Management System created by Gilbert Hutapea.
+
+The original project author, license, and credits remain unchanged.
