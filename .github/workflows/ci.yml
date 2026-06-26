@@ -68,9 +68,13 @@ jobs:
         working-directory: Frontend
         run: |
           npm run dev -- --host &
-      
-      - name: Wait
-        run: sleep 25
+
+      - name: Wait for Frontend
+  run: |
+    timeout 60 bash -c 'until curl -s http://localhost:5173 > /dev/null; do
+      echo "Waiting for frontend..."
+      sleep 2
+    done'
 
       - name: Run Playwright Tests
         working-directory: tests
