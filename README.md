@@ -302,3 +302,10 @@ A GitHub Actions workflow is included to automatically run the Playwright test s
 This repository is based on the open-source Employee Salary Management System created by Gilbert Hutapea.
 
 The original project author, license, and credits remain unchanged.
+
+## Known Limitations
+
+- GitHub Actions workflow is included.
+- The original HRMS requires manual MySQL database initialization before execution.
+- Authentication in the original project is UI-only and does not communicate with the backend.
+- Because of these limitations, some Playwright tests intentionally fail and expose genuine defects in the application rather than issues with the test suite.
