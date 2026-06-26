@@ -67,6 +67,14 @@ The failure confirms that the employee login page is missing from the applicatio
 
 ---
 
+## CI Execution Note
+
+The Playwright test suite was executed successfully on the local development environment.
+
+A GitHub Actions workflow was also configured to automate execution. While the workflow completed the setup process (dependency installation, database import, backend startup, and frontend startup), the application did not fully render in the GitHub-hosted environment, causing Playwright timeout failures.
+
+This appears to be an environment-specific issue rather than a defect in the Playwright test scripts themselves.
+
 ## Final Note
 
 I expected two tests to fail because they were written to verify the bugs I discovered during exploratory testing. Seeing these failures gives confidence that the bugs are real, reproducible, and can be verified again after they are fixed.

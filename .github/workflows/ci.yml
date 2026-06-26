@@ -26,9 +26,11 @@ jobs:
           --health-retries=10
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
@@ -44,37 +46,47 @@ jobs:
         working-directory: tests
         run: npm install
 
-      - name: Install Playwright
+      - name: Install Playwright Browsers
         working-directory: tests
         run: npx playwright install --with-deps
 
+      - name: Install MySQL Client
+        run: sudo apt-get update && sudo apt-get install -y mysql-client
+
       - name: Import Database
         run: |
-          sudo apt-get install mysql-client
-          mysql -h 127.0.0.1 -uroot db_penggajian3 < Backend/db/db_penggajian3.sql
+          mysql -h127.0.0.1 -uroot db_penggajian3 < Backend/db/db_penggajian3.sql
 
       - name: Start Backend
         working-directory: Backend
-        run: |
-          node index.js &
         env:
           DB_HOST: 127.0.0.1
           DB_USER: root
-          DB_PASSWORD:
+          DB_PASSWORD: ""
           DB_NAME: db_penggajian3
           PORT: 5000
+        run: |
+          nohup node index.js > backend.log 2>&1 &
 
       - name: Start Frontend
         working-directory: Frontend
         run: |
-          npm run dev -- --host &
+          nohup npm run dev -- --host 0.0.0.0 > frontend.log 2>&1 &
 
-      - name: Wait for Frontend
-  run: |
-    timeout 60 bash -c 'until curl -s http://localhost:5173 > /dev/null; do
-      echo "Waiting for frontend..."
-      sleep 2
-    done'
+      - name: Wait for Servers
+        run: sleep 30
+
+      - name: Show Running Processes
+        run: |
+          ps -ef
+
+      - name: Show Backend Log
+        run: |
+          cat Backend/backend.log || true
+
+      - name: Show Frontend Log
+        run: |
+          cat Frontend/frontend.log || true
 
       - name: Run Playwright Tests
         working-directory: tests
