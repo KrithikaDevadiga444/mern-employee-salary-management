@@ -2,37 +2,76 @@ name: HRMS QA Tests
 
 on:
   push:
-    branches:
-      - main
-
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   playwright-tests:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ""
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: db_penggajian3
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: |
-          cd tests
-          npm install
+      - name: Install Backend Dependencies
+        working-directory: Backend
+        run: npm install
 
-      - name: Install Playwright Browsers
+      - name: Install Frontend Dependencies
+        working-directory: Frontend
+        run: npm install
+
+      - name: Install Test Dependencies
+        working-directory: tests
+        run: npm install
+
+      - name: Install Playwright
+        working-directory: tests
+        run: npx playwright install --with-deps
+
+      - name: Import Database
         run: |
-          cd tests
-          npx playwright install --with-deps chromium
+          sudo apt-get install mysql-client
+          mysql -h 127.0.0.1 -uroot db_penggajian3 < Backend/db/db_penggajian3.sql
+
+      - name: Start Backend
+        working-directory: Backend
+        run: |
+          node index.js &
+        env:
+          DB_HOST: 127.0.0.1
+          DB_USER: root
+          DB_PASSWORD:
+          DB_NAME: db_penggajian3
+          PORT: 5000
+
+      - name: Start Frontend
+        working-directory: Frontend
+        run: |
+          npm run dev -- --host &
+      
+      - name: Wait
+        run: sleep 25
 
       - name: Run Playwright Tests
-        run: |
-          cd tests
-          npx playwright test --reporter=line
+        working-directory: tests
+        run: npx playwright test --reporter=line
