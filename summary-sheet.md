@@ -12,7 +12,7 @@ and to whom?**
 This HRMS exists to deliver an accurate payslip 
 to construction workers, who depend on it because 
 their salary is how they support their families. 
-Many of them depend on receiving their salary on time to manage their monthly expenses. If they don't get paid correctly or on 
+If they don't get paid correctly or on 
 time, they may struggle to buy food, pay rent, or 
 cover their children's school fees. That's why 
 even a small payroll mistake can have a big impact 
@@ -26,7 +26,7 @@ pattern you found across your testing?**
 The most dangerous pattern I found was that the 
 frontend was built completely disconnected from 
 the backend. The login button is literally just 
-a navigation link in the code — no API call, no 
+a navigation link in the code with no API call, no 
 password check. The save form sends no request 
 to the backend. The payslip button does nothing. 
 I only discovered this by actually opening the 
@@ -81,7 +81,7 @@ My first approach was to find a "perfect" English
 repo and I wasted almost two hours switching 
 between repositories. Then I realized the 
 Indonesian HRMS I already had running was 
-actually better — it had real bugs I could 
+actually better and it had real bugs I could 
 investigate with actual evidence. That shift 
 was important: a real QA engineer doesn't need 
 a perfect system. They need to find what's 
@@ -95,9 +95,7 @@ you would need to learn?**
 
 Three things I'd need to learn:
 
-First — how payroll actually works under Indian 
-labour law. PF, ESI, overtime rules under the 
-Factories Act that i don't know enough about them yet to know what all the edge cases would be.
+First — how payroll actually works under Indian labour law. PF, ESI, overtime rules under the Factories Act. I don't know these well enough to write proper edge case tests for them.
 
 Second — how to write automated tests for apps 
 with broken or missing authentication flows, 
